@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_shared_stats",
+  "info": {
+    "displayName": "Chiffre",
+    "icon": "cube"
+  },
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

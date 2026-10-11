@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_blocks_verses",
+  "info": {
+    "displayName": "Verset",
+    "icon": "book"
+  },
+  "attributes": {
+    "arabic": {
+      "type": "string",
+      "required": true
+    },
+    "translation": {
+      "type": "text",
+      "required": true
+    },
+    "reference": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

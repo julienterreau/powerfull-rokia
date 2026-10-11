@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_blocks_notes",
+  "info": {
+    "displayName": "Encadré",
+    "icon": "information"
+  },
+  "attributes": {
+    "text": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

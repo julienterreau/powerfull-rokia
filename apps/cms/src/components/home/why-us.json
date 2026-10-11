@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_home_why_uss",
+  "info": {
+    "displayName": "Accueil — Pourquoi",
+    "icon": "cube"
+  },
+  "attributes": {
+    "header": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.section-header"
+    },
+    "features": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.feature"
+    }
+  }
+}

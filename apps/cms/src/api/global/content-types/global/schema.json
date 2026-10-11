@@ -1,0 +1,66 @@
+{
+  "kind": "singleType",
+  "collectionName": "globals",
+  "info": {
+    "singularName": "global",
+    "pluralName": "globals",
+    "displayName": "Global"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "siteName": {
+      "type": "string",
+      "required": true
+    },
+    "baseline": {
+      "type": "text",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "youtubeUrl": {
+      "type": "string",
+      "required": true
+    },
+    "youtubeHandle": {
+      "type": "string",
+      "required": true
+    },
+    "disclaimer": {
+      "type": "text"
+    },
+    "callWidgetEnabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "menu": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.link"
+    },
+    "discover": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.link"
+    },
+    "aboutLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.link"
+    },
+    "legal": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.link"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

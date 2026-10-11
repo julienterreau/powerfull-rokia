@@ -1,0 +1,72 @@
+{
+  "kind": "singleType",
+  "collectionName": "videos_pages",
+  "info": {
+    "singularName": "videos-page",
+    "pluralName": "videos-pages",
+    "displayName": "Page Vidéos"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    },
+    "crumb": {
+      "type": "string",
+      "required": true
+    },
+    "eyebrow": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "titleAccent": {
+      "type": "string"
+    },
+    "lead": {
+      "type": "text",
+      "required": true
+    },
+    "latestLabel": {
+      "type": "string",
+      "required": true
+    },
+    "watchLabel": {
+      "type": "string",
+      "required": true
+    },
+    "allLabel": {
+      "type": "string",
+      "required": true
+    },
+    "allUrl": {
+      "type": "string",
+      "required": true
+    },
+    "bannerTitle": {
+      "type": "string",
+      "required": true
+    },
+    "bannerText": {
+      "type": "text",
+      "required": true
+    },
+    "bannerCta": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "filters": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.text-line"
+    }
+  }
+}

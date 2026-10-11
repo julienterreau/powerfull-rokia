@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "diagnostic_audios",
+  "info": {
+    "singularName": "diagnostic-audio",
+    "pluralName": "diagnostic-audios",
+    "displayName": "Audio du diagnostic"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "order": {
+      "type": "integer",
+      "required": true,
+      "unique": true,
+      "min": 1,
+      "max": 20
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "audio": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "audios"
+      ]
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_home_diagnostic_teasers",
+  "info": {
+    "displayName": "Accueil — Teaser diagnostic",
+    "icon": "cube"
+  },
+  "attributes": {
+    "header": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.section-header"
+    },
+    "checks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.text-line"
+    },
+    "cta": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "previewTitle": {
+      "type": "string",
+      "required": true
+    },
+    "openLabel": {
+      "type": "string",
+      "required": true
+    },
+    "moreLabel": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

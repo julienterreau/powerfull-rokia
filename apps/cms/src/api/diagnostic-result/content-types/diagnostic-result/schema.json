@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "diagnostic_results",
+  "info": {
+    "singularName": "diagnostic-result",
+    "pluralName": "diagnostic-results",
+    "displayName": "Résultat du diagnostic"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "minScore": {
+      "type": "integer",
+      "required": true
+    },
+    "maxScore": {
+      "type": "integer",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "text": {
+      "type": "richtext",
+      "required": true
+    },
+    "recommendedVideos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::video.video"
+    }
+  }
+}

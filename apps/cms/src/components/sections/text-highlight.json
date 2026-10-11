@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_sections_text_highlights",
+  "info": {
+    "displayName": "Section — Texte mis en avant",
+    "icon": "quote"
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "titleAccent": {
+      "type": "string"
+    },
+    "text": {
+      "type": "richtext",
+      "required": true
+    },
+    "ctaLabel": {
+      "type": "string",
+      "required": true
+    },
+    "ctaHref": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

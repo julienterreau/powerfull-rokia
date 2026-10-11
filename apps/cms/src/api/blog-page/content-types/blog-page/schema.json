@@ -1,0 +1,70 @@
+{
+  "kind": "singleType",
+  "collectionName": "blog_pages",
+  "info": {
+    "singularName": "blog-page",
+    "pluralName": "blog-pages",
+    "displayName": "Page Blog"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    },
+    "crumb": {
+      "type": "string",
+      "required": true
+    },
+    "eyebrow": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "titleAccent": {
+      "type": "string"
+    },
+    "lead": {
+      "type": "text",
+      "required": true
+    },
+    "readLabel": {
+      "type": "string",
+      "required": true
+    },
+    "featuredLabel": {
+      "type": "string",
+      "required": true
+    },
+    "loadMore": {
+      "type": "string",
+      "required": true
+    },
+    "newsletterTitle": {
+      "type": "string",
+      "required": true
+    },
+    "newsletterText": {
+      "type": "text",
+      "required": true
+    },
+    "newsletterPlaceholder": {
+      "type": "string",
+      "required": true
+    },
+    "newsletterButton": {
+      "type": "string",
+      "required": true
+    },
+    "empty": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

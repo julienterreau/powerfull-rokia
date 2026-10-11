@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_shared_steps",
+  "info": {
+    "displayName": "Étape",
+    "icon": "cube"
+  },
+  "attributes": {
+    "number": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "text": {
+      "type": "text",
+      "required": true
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

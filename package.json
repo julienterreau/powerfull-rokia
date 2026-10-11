@@ -1,0 +1,16 @@
+{
+  "name": "powerfull-rokia",
+  "private": true,
+  "packageManager": "pnpm@11.21.0",
+  "pnpm": {
+    "ignoredBuiltDependencies": ["unrs-resolver"]
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter web --filter cms dev",
+    "dev:web": "pnpm --filter web dev",
+    "dev:cms": "pnpm --filter cms develop",
+    "build": "pnpm --filter web build",
+    "seed": "pnpm --filter cms seed",
+    "lint": "pnpm --filter web lint"
+  }
+}
