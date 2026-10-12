@@ -1,8 +1,8 @@
 import { postgresAdapter } from "@payloadcms/db-postgres";
-import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { fr } from "@payloadcms/translations/languages/fr";
 import fs from "fs";
+import { createRequire } from "module";
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
@@ -26,6 +26,9 @@ function localDatabase() {
   const dataDir = path.resolve(dirname, "data");
   fs.mkdirSync(dataDir, { recursive: true });
   const file = path.join(dataDir, "payload.sqlite").replace(/\\/g, "/");
+  // Loaded only when DATABASE_URL is empty. A static import ships the native
+  // libsql module into the Vercel function and the site returns 500.
+  const { sqliteAdapter } = createRequire(import.meta.url)(["@payloadcms", "db-sqlite"].join("/")) as typeof import("@payloadcms/db-sqlite");
   return sqliteAdapter({ client: { url: `file:${file}` } });
 }
 

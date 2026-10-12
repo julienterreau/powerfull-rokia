@@ -1,9 +1,11 @@
 import { getPayload, type Payload } from "payload";
-import config from "@payload-config";
 
 let client: Promise<Payload> | null = null;
 
 export function payloadClient() {
-  client ??= getPayload({ config });
+  if (!process.env.DATABASE_URL?.trim()) {
+    return Promise.reject(new Error("DATABASE_URL is not set"));
+  }
+  client ??= import("@payload-config").then((mod) => getPayload({ config: mod.default }));
   return client;
 }
