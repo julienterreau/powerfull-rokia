@@ -13,11 +13,11 @@ export function VideoCard({ video, large = false }: { video: Video; large?: bool
   return (
     <article className="vd">
       <button className="th" type="button" style={{ background: video.gradient }} onClick={() => (id ? setOpen(true) : window.open(video.youtubeUrl, "_blank", "noopener"))}>
-        {video.thumbnailUrl ? null : <Pattern />}
+        {video.thumbnailUrl ? <img alt="" src={video.thumbnailUrl} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} /> : <Pattern />}
         <span className="play" aria-hidden>
           <PlayIcon color="#0F3D33" size={22} />
         </span>
-        <span className="du">{video.duration}</span>
+        {video.duration ? <span className="du">{video.duration}</span> : null}
       </button>
       {!large ? (
         <>

@@ -32,6 +32,18 @@ export function youtubeId(url: string) {
   return match?.[1] ?? null;
 }
 
+export function youtubeSubscribeUrl(url: string) {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace(/^www\./, "");
+    if (host !== "youtube.com" && host !== "youtu.be") return url;
+    parsed.searchParams.set("sub_confirmation", "1");
+    return parsed.toString();
+  } catch {
+    return url;
+  }
+}
+
 export function initial(handle: string) {
   const clean = handle.replace(/^@/, "");
   return (clean[0] || "?").toUpperCase();

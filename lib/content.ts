@@ -20,6 +20,7 @@ import type { Article, ContactCard, ContactPageContent, GlobalContent, HomeConte
 import { payloadClient } from "./cms";
 import { homeSections, labels, link, links, mediaAlt, mediaUrl, toArticle, toVideo } from "./cms-map";
 import { articleText, readingTime } from "./utils";
+import { fetchYoutubeVideos } from "./youtube";
 
 type Doc = Record<string, unknown>;
 
@@ -293,13 +294,19 @@ export const getBlogFilters = cache(async () => {
   return ["Tous", ...categories.map((category) => category.name)];
 });
 
-export const getVideos = cache(() =>
-  cms(async () => {
+export const getVideos = cache(async () => {
+  try {
+    const videos = await fetchYoutubeVideos();
+    if (videos.length > 0) return videos;
+  } catch (error) {
+    console.error(error);
+  }
+  return cms(async () => {
     const rows = await docs("videos");
     if (rows.length === 0) return null;
     return rows.map(toVideo);
-  }, videosSeed),
-);
+  }, videosSeed);
+});
 
 export const getTestimonials = cache(() =>
   cms(async () => {
@@ -352,8 +359,9 @@ export function relatedArticles(articles: Article[], slug: string, category: str
 }
 
 export function recommendedVideos(score: number, videos: Video[] = videosSeed): Video[] {
-  if (score >= 13) return videos.filter((video) => video.category === "Protection" || video.category === "Sorcellerie").slice(0, 3);
-  if (score >= 6) return videos.filter((video) => video.category === "Protection" || video.category === "Mauvais œil").slice(0, 3);
+  const pick = (matched: Video[]) => (matched.length > 0 ? matched.slice(0, 3) : videos.slice(0, 3));
+  if (score >= 13) return pick(videos.filter((video) => video.category === "Protection" || video.category === "Sorcellerie"));
+  if (score >= 6) return pick(videos.filter((video) => video.category === "Protection" || video.category === "Mauvais œil"));
   return videos.slice(0, 3);
 }
 
