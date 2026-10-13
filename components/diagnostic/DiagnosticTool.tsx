@@ -60,7 +60,13 @@ export function DiagnosticTool({ page, audios }: Props) {
   if (result) {
     return (
       <div className="tool">
-        <ResultScreen band={result.band} score={result.score} videos={result.videos} />
+        <ResultScreen
+          name={name.trim()}
+          band={result.band}
+          score={result.score}
+          reactions={sorted.filter((audio) => answers[audio.order] === "oui").map((audio) => audio.order)}
+          videos={result.videos}
+        />
         <div className="send">
           <span>{page.confidential}</span>
           <button

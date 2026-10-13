@@ -3,9 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { Answer } from "@/lib/stores/diagnostic";
 import { useAudioStore } from "@/lib/stores/audio";
-import { PlayIcon } from "../ui/icons";
-
-const waves = [6, 12, 18, 10, 16, 8, 14, 20, 9, 13, 7, 15];
+import { PauseIcon, PlayIcon } from "../ui/icons";
 
 type Props = {
   order: number;
@@ -23,29 +21,34 @@ export function AudioRow({ order, title, url, answer, locked, yesLabel, noLabel,
   const currentId = useAudioStore((state) => state.currentId);
   const playing = useAudioStore((state) => state.playing);
   const toggle = useAudioStore((state) => state.toggle);
+  const pause = useAudioStore((state) => state.pause);
   const active = currentId === order && playing;
+  const action = active ? `Pause ${title}` : `Lire ${title}`;
 
   useEffect(() => {
     const node = audioRef.current;
+    if (!node || active) return;
+    node.pause();
+  }, [active]);
+
+  function onToggle() {
+    const node = audioRef.current;
     if (!node) return;
     if (active) {
-      void node.play().catch(() => undefined);
-    } else {
       node.pause();
+      pause();
+      return;
     }
-  }, [active]);
+    toggle(order);
+    void node.play().catch(() => useAudioStore.getState().pause());
+  }
 
   return (
     <div className={active ? "dr on" : answer ? "dr done" : "dr"}>
-      <button className="pb" type="button" aria-label={active ? `Pause ${title}` : `Lire ${title}`} aria-pressed={active} onClick={() => toggle(order)}>
-        <PlayIcon />
+      <button className="pb" type="button" aria-label={action} title={action} aria-pressed={active} onClick={onToggle}>
+        {active ? <PauseIcon /> : <PlayIcon />}
       </button>
       <span>{title}</span>
-      <em className={active ? "wv play" : "wv"} aria-hidden>
-        {waves.map((height, index) => (
-          <i key={index} style={{ height }} />
-        ))}
-      </em>
       <div className="yn" role="radiogroup" aria-label={title}>
         <button type="button" role="radio" aria-checked={answer === "oui"} className={answer === "oui" ? "sel" : undefined} disabled={locked} onClick={() => onAnswer(order, "oui")}>
           {yesLabel}

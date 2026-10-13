@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { openCall } from "@/lib/open-call";
 import { PhoneIcon } from "../ui/icons";
 
 const TENANT = process.env.NEXT_PUBLIC_WEBCALLHUB_ID || "86035c81-4ea2-4ac6-9a65-5a6f29d0c366";
@@ -66,20 +67,7 @@ export function CallWidget({ enabled }: { enabled: boolean }) {
         className="call-btn"
         type="button"
         aria-label="Appeler"
-        onClick={() => {
-          const open = () => document.getElementById("wch-launcher")?.click();
-          if (document.getElementById("wch-launcher")) {
-            open();
-            return;
-          }
-          const started = Date.now();
-          const timer = window.setInterval(() => {
-            if (document.getElementById("wch-launcher") || Date.now() - started > 5000) {
-              window.clearInterval(timer);
-              open();
-            }
-          }, 100);
-        }}
+        onClick={openCall}
       >
         <PhoneIcon />
       </button>

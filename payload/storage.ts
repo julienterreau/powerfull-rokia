@@ -1,13 +1,20 @@
 import { s3Storage } from "@payloadcms/storage-s3";
 import type { Plugin } from "payload";
 
-function publicFiles(prefix: string) {
+function publicFiles(collectionPrefix: string) {
   return {
-    prefix,
+    prefix: collectionPrefix,
     disablePayloadAccessControl: true as const,
-    generateFileURL: ({ filename }: { filename: string }) => {
+    generateFileURL: ({ filename, prefix }: { filename: string; prefix?: string }) => {
       const base = (process.env.R2_PUBLIC_URL || "").replace(/\/$/, "");
-      return `${base}/${prefix}/${filename}`;
+      // Client uploads land in `audio/<id>/file.mp3`, not `audio/file.mp3`.
+      const folder = (prefix || collectionPrefix).replace(/^\/+|\/+$/g, "");
+      const path = `${folder}/${filename}`
+        .split("/")
+        .filter(Boolean)
+        .map((part) => encodeURIComponent(part))
+        .join("/");
+      return `${base}/${path}`;
     },
   };
 }

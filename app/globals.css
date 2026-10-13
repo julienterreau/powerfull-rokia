@@ -817,7 +817,53 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 40px; }
 
 .tool { max-width: 760px; margin: 48px auto 0; border-radius: 32px; padding: 34px; box-shadow: 0 50px 100px -40px rgba(11, 46, 39, 0.6); }
 .tool .fields { margin-top: 0; }
-.tool .dr { padding: 14px 16px; }
+.tool .dr {
+  padding: 12px 14px;
+  background: #071f1b;
+  border-color: rgba(240, 138, 30, 0.22);
+  border-radius: 18px;
+}
+.tool .dr.on { background: #0c2923; border-color: rgba(240, 138, 30, 0.7); }
+.tool .dr.done { opacity: 1; }
+.tool .pb { width: 44px; height: 44px; background: #f08a1e; }
+.tool .pb svg { display: block; }
+.tool .yn button {
+  border-radius: 12px;
+  min-width: 72px;
+  padding: 10px 16px;
+  background: #10241f;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+.tool .yn button.sel { background: #f08a1e; border-color: #f08a1e; color: #fff; }
+.expertise {
+  border: 1px solid #f08a1e;
+  border-radius: 18px;
+  padding: 28px 26px 24px;
+}
+.expertise h3 { font-size: 28px; margin-top: 0; }
+.expertise h4 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+  margin: 28px 0 0;
+}
+.expertise .reactions { color: #d7e2dc; font-size: 14px; }
+.exchange {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  border: 1px solid #f08a1e;
+  border-radius: 12px;
+  background: transparent;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 16px;
+  cursor: pointer;
+}
+.exchange:hover { background: #f08a1e; }
 .prog { display: flex; justify-content: space-between; font-size: 13px; color: var(--on-dark); margin-top: 22px; font-weight: 600; }
 .send { margin-top: 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .send span { font-size: 13px; color: #86a098; }
@@ -1059,6 +1105,9 @@ button.th { display: block; width: 100%; border: 0; padding: 0; cursor: pointer;
   .qcard2, .tool { padding: 18px; }
   .dr { font-size: 15px; gap: 10px; padding: 10px 12px; }
   .pb { width: 34px; height: 34px; }
+  .tool .pb { width: 40px; height: 40px; }
+  .tool .dr span { min-width: 0; }
+  .tool .yn button { min-width: 0; padding: 8px 12px; }
   .yn button { padding: 7px 10px; }
   .wv, .dr.on .wv { display: none; }
   .fields, .frm .row2 { grid-template-columns: 1fr; }

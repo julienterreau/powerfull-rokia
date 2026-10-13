@@ -16,6 +16,22 @@ export function PlayIcon({ color = "#fff", size = 16 }: { color?: string; size?:
   );
 }
 
+export function PauseIcon({ color = "#fff", size = 16 }: { color?: string; size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden>
+      <path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z" fill={color} />
+    </svg>
+  );
+}
+
+export function ChatIcon({ color = "#fff", size = 18 }: { color?: string; size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden>
+      <path d="M5 6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v7A2.5 2.5 0 0 1 16.5 16H9l-4 3.5V6.5z" fill="none" stroke={color} strokeWidth="1.8" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export function PhoneIcon({ size = 26 }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden>
