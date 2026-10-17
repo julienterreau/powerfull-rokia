@@ -7,7 +7,7 @@ const textLink =
 
 export function Highlights({ items }: { items: TextHighlightSection[] }) {
   return (
-    <Section>
+    <Section className="bg-sand-2">
       <div className="grid md:grid-cols-2">
         {items.map((data, index) => (
           <article className={index === 0 ? "md:pr-14" : "mt-8 border-t border-line pt-9 md:mt-0 md:border-t-0 md:border-l md:pt-0 md:pl-14"} key={data.ctaHref}>

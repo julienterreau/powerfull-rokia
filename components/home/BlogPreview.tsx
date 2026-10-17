@@ -19,14 +19,14 @@ export function BlogPreview({ data, articles }: { data: BlogPreviewSection; arti
   if (!lead) return null;
 
   return (
-    <Section className="bg-sand-2">
+    <Section className="bg-sand">
       <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:items-center md:gap-8">
         <SectionHeader className="min-w-0 flex-1" eyebrow={data.eyebrow} title={data.title} titleAccent={data.titleAccent} />
         <Button {...data.cta} />
       </div>
       <div className="mt-12 grid items-start gap-7 md:grid-cols-[1.15fr_0.9fr] md:gap-14">
         <a className="group" href={`/blog/${lead.slug}`}>
-          <div className="pat relative h-[200px] overflow-hidden rounded-3xl bg-sand md:h-[300px]">
+          <div className="pat relative h-[200px] overflow-hidden rounded-3xl bg-sand-2 md:h-[300px]">
             <span className="absolute top-4 left-4 z-10 rounded-full bg-emerald px-3 py-1.5 text-[13px] font-semibold text-white">À la une</span>
           </div>
           <span className="mt-4 block text-xs font-semibold tracking-[0.14em] text-gold uppercase">{lead.category}</span>
@@ -36,7 +36,7 @@ export function BlogPreview({ data, articles }: { data: BlogPreviewSection; arti
         </a>
         <div>
           {side.map((article, index) => (
-            <a className="group block rounded-2xl border-t border-line px-3 py-[22px] transition-colors first:border-t-0 first:pt-0 hover:bg-white/50" href={`/blog/${article.slug}`} key={article.slug}>
+            <a className="group block rounded-2xl border-t border-line py-[24px] transition-colors first:border-t-0 first:pt-0 hover:bg-white/50" href={`/blog/${article.slug}`} key={article.slug}>
               <span className={`block text-xs font-semibold tracking-[0.14em] text-gold uppercase ${index === 0 ? "" : "mt-[18px]"}`}>
                 {article.category} · {minutes(article)}
               </span>

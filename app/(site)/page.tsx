@@ -9,9 +9,7 @@ import { Podcast } from "@/components/home/Podcast";
 import { Highlights } from "@/components/home/Highlights";
 import { Testimonials } from "@/components/home/Testimonials";
 import { TextHighlight } from "@/components/home/TextHighlight";
-import { ThemesStrip } from "@/components/home/ThemesStrip";
 import { Verse } from "@/components/home/Verse";
-import { WhyUs } from "@/components/home/WhyUs";
 import { getArticles, getFaq, getHome, getTestimonials, getVideos } from "@/lib/content";
 
 export default async function HomePage() {
@@ -59,17 +57,13 @@ function HomeBlock({
 }) {
   switch (section.__component) {
     case "home.hero":
-      return <Hero data={section} />;
-    case "home.themes-strip":
-      return <ThemesStrip data={section} />;
+      return <Hero />;
     case "home.how-it-works":
       return <HowItWorks data={section} />;
     case "home.diagnostic-teaser":
       return <DiagnosticTeaser data={section} />;
     case "home.latest-videos":
       return <LatestVideos data={section} videos={videos} />;
-    case "home.why-us":
-      return <WhyUs data={section} />;
     case "sections.text-highlight":
       return <TextHighlight data={section} tone={tone} />;
     case "home.blog-preview":

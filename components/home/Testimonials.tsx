@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Testimonial, TestimonialsSection } from "@/content/types";
 import { initial } from "@/lib/utils";
 import { Pattern } from "../ui/Pattern";
@@ -11,7 +11,16 @@ const tones = ["#C4A15A", "#1E6650", "#8E6B2F"];
 export function Testimonials({ data, items }: { data: TestimonialsSection; items: Testimonial[] }) {
   const list = items.filter((item) => item.visible);
   const [index, setIndex] = useState(0);
+  const names = useRef<HTMLDivElement>(null);
   const current = list[index];
+
+  useEffect(() => {
+    const row = names.current;
+    const name = row?.children[index] as HTMLElement | undefined;
+    if (!row || !name || window.matchMedia("(min-width: 768px)").matches) return;
+    row.scrollTo({ left: name.offsetLeft - (row.clientWidth - name.offsetWidth) / 2, behavior: "smooth" });
+  }, [index]);
+
   if (!current) return null;
 
   function go(delta: number) {
@@ -28,10 +37,10 @@ export function Testimonials({ data, items }: { data: TestimonialsSection; items
             “
           </p>
           <p className="mx-auto mt-4 max-w-[680px] font-serif text-[22px] leading-snug font-normal text-gold-light italic md:text-[28px] md:leading-relaxed">{current.text}</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-2.5">
+          <div ref={names} className="mt-8 flex snap-x snap-mandatory gap-2.5 overflow-x-auto scroll-smooth px-4 [-ms-overflow-style:none] [scrollbar-width:none] md:flex-wrap md:justify-center md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
             {list.map((item, itemIndex) => (
               <button
-                className={`inline-flex items-center gap-2 rounded-full border border-white/20 py-1.5 pr-3.5 pl-1.5 text-sm font-semibold transition hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${itemIndex === index ? "bg-white text-emerald hover:bg-white" : "bg-white/10 text-white hover:bg-white/15"}`}
+                className={`inline-flex shrink-0 snap-center items-center gap-2 rounded-full border border-white/20 py-1.5 pr-3.5 pl-1.5 text-sm font-semibold transition hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${itemIndex === index ? "bg-white text-emerald hover:bg-white" : "bg-white/10 text-white hover:bg-white/15"}`}
                 key={item.handle}
                 type="button"
                 onClick={() => setIndex(itemIndex)}

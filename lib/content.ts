@@ -24,9 +24,25 @@ import { fetchYoutubeVideos } from "./youtube";
 
 type Doc = Record<string, unknown>;
 
+function isReset(error: unknown) {
+  let current: unknown = error;
+  for (let depth = 0; depth < 4 && current && typeof current === "object"; depth += 1) {
+    const record = current as { code?: string; cause?: unknown; message?: string };
+    if (record.code === "ECONNRESET" || record.message?.includes("ECONNRESET")) return true;
+    current = record.cause;
+  }
+  return false;
+}
+
 async function cms<T>(read: () => Promise<T | null>, seed: T): Promise<T> {
   try {
-    return (await read()) ?? seed;
+    try {
+      return (await read()) ?? seed;
+    } catch (error) {
+      if (!isReset(error)) throw error;
+      await new Promise((resolve) => setTimeout(resolve, 600));
+      return (await read()) ?? seed;
+    }
   } catch (error) {
     console.error(error);
     return seed;

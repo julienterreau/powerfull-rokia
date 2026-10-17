@@ -6,7 +6,7 @@ import { FaqList } from "../contact/Faq";
 
 export function FaqPreview({ data, items }: { data: FaqPreviewSection; items: FaqItem[] }) {
   return (
-    <Section className="py-[88px] md:py-[120px]">
+    <Section id="faq" className="scroll-mt-28 py-[88px] md:py-[120px]">
       <div className="fq">
         <div>
           <SectionHeader eyebrow={data.eyebrow} title={data.title} titleAccent={data.titleAccent} lead={data.lead} />

@@ -11,6 +11,7 @@ import { Articles } from "./payload/collections/Articles";
 import { Categories } from "./payload/collections/Categories";
 import { DiagnosticAudios } from "./payload/collections/DiagnosticAudios";
 import { Testimonials, FaqItems } from "./payload/collections/Editorial";
+import { Guestbook, GuestbookReactions } from "./payload/collections/Guestbook";
 import { ContactMessages, DiagnosticResults, DiagnosticSubmissions, NewsletterSubscribers } from "./payload/collections/Inbox";
 import { LegalPages } from "./payload/collections/LegalPages";
 import { Media } from "./payload/collections/Media";
@@ -32,9 +33,14 @@ function localDatabase() {
   return sqliteAdapter({ client: { url: `file:${file}` } });
 }
 
+function connectionString() {
+  // pg warns when sslmode is prefer, require, or verify-ca. verify-full is the same check it already applies.
+  return (process.env.DATABASE_URL ?? "").replace(/([?&])sslmode=(?:prefer|require|verify-ca)\b/, "$1sslmode=verify-full");
+}
+
 const database = process.env.DATABASE_URL
   ? postgresAdapter({
-      pool: { connectionString: process.env.DATABASE_URL },
+      pool: { connectionString: connectionString(), idleTimeoutMillis: 20_000, connectionTimeoutMillis: 10_000 },
       push: process.env.NODE_ENV !== "production",
     })
   : localDatabase();
@@ -56,6 +62,8 @@ export default buildConfig({
     FaqItems,
     DiagnosticResults,
     DiagnosticSubmissions,
+    Guestbook,
+    GuestbookReactions,
     ContactMessages,
     NewsletterSubscribers,
     LegalPages,

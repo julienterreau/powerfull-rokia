@@ -77,6 +77,8 @@ export interface Config {
     'faq-items': FaqItem;
     'diagnostic-results': DiagnosticResult;
     'diagnostic-submissions': DiagnosticSubmission;
+    guestbook: Guestbook;
+    'guestbook-reactions': GuestbookReaction;
     'contact-messages': ContactMessage;
     'newsletter-subscribers': NewsletterSubscriber;
     'legal-pages': LegalPage;
@@ -97,6 +99,8 @@ export interface Config {
     'faq-items': FaqItemsSelect<false> | FaqItemsSelect<true>;
     'diagnostic-results': DiagnosticResultsSelect<false> | DiagnosticResultsSelect<true>;
     'diagnostic-submissions': DiagnosticSubmissionsSelect<false> | DiagnosticSubmissionsSelect<true>;
+    guestbook: GuestbookSelect<false> | GuestbookSelect<true>;
+    'guestbook-reactions': GuestbookReactionsSelect<false> | GuestbookReactionsSelect<true>;
     'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
     'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
     'legal-pages': LegalPagesSelect<false> | LegalPagesSelect<true>;
@@ -397,6 +401,31 @@ export interface DiagnosticSubmission {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guestbook".
+ */
+export interface Guestbook {
+  id: number;
+  authorName: string;
+  message: string;
+  parent?: (number | null) | Guestbook;
+  fromClient?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guestbook-reactions".
+ */
+export interface GuestbookReaction {
+  id: number;
+  entry: number | Guestbook;
+  emoji: string;
+  visitorId: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact-messages".
  */
 export interface ContactMessage {
@@ -544,6 +573,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'diagnostic-submissions';
         value: number | DiagnosticSubmission;
+      } | null)
+    | ({
+        relationTo: 'guestbook';
+        value: number | Guestbook;
+      } | null)
+    | ({
+        relationTo: 'guestbook-reactions';
+        value: number | GuestbookReaction;
       } | null)
     | ({
         relationTo: 'contact-messages';
@@ -828,6 +865,29 @@ export interface DiagnosticSubmissionsSelect<T extends boolean = true> {
   answers?: T;
   score?: T;
   submittedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guestbook_select".
+ */
+export interface GuestbookSelect<T extends boolean = true> {
+  authorName?: T;
+  message?: T;
+  parent?: T;
+  fromClient?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guestbook-reactions_select".
+ */
+export interface GuestbookReactionsSelect<T extends boolean = true> {
+  entry?: T;
+  emoji?: T;
+  visitorId?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -4,7 +4,9 @@
   "type": "module",
   "packageManager": "pnpm@11.21.0",
   "pnpm": {
-    "ignoredBuiltDependencies": ["unrs-resolver"]
+    "ignoredBuiltDependencies": [
+      "unrs-resolver"
+    ]
   },
   "scripts": {
     "dev": "next dev --turbopack",
@@ -16,6 +18,7 @@
     "seed": "payload run payload/seed.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
     "@payloadcms/db-postgres": "3.90.2",
     "@payloadcms/db-sqlite": "3.90.2",
     "@payloadcms/next": "3.90.2",
@@ -23,12 +26,14 @@
     "@payloadcms/storage-s3": "3.90.2",
     "@payloadcms/translations": "3.90.2",
     "@payloadcms/ui": "3.90.2",
+    "emoji-picker-react": "^5.0.0",
     "framer-motion": "^12.23.12",
     "graphql": "^16.11.0",
     "next": "15.4.11",
     "payload": "3.90.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-hook-form": "^7.90.0",
     "sharp": "^0.35.5",
     "zod": "^3.25.76",
     "zustand": "^5.0.8"

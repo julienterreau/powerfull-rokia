@@ -3,6 +3,7 @@ import { Card } from "../ui/Card";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 import { SectionHeader } from "../ui/SectionHeader";
+import { StepLink } from "./StepLink";
 
 export function HowItWorks({ data }: { data: HowSection }) {
   return (
@@ -15,7 +16,7 @@ export function HowItWorks({ data }: { data: HowSection }) {
               <div className="n">{step.number}</div>
               <h3>{step.title}</h3>
               <p>{step.text}</p>
-              <a href={step.url}>{step.linkLabel}</a>
+              <StepLink href={step.url}>{step.linkLabel}</StepLink>
             </Card>
           </Reveal>
         ))}

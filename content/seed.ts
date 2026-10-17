@@ -31,7 +31,7 @@ export const globalSeed: GlobalContent = {
     { label: "Diagnostic", url: "/diagnostic" },
     { label: "Blog", url: "/blog" },
     { label: "Vidéos", url: "/videos" },
-    { label: "Contact", url: "/contact" },
+    { label: "Témoignages", url: "/temoignages" },
   ],
   discover: [
     { label: "Blog", url: "/blog" },
@@ -40,8 +40,8 @@ export const globalSeed: GlobalContent = {
   ],
   aboutLinks: [
     { label: "À propos", url: "/a-propos" },
-    { label: "FAQ", url: "/contact#faq" },
-    { label: "Contact", url: "/contact" },
+    { label: "FAQ", url: "/#faq" },
+    { label: "Témoignages", url: "/temoignages" },
   ],
   legal: [
     { label: "Mentions légales", url: "/mentions-legales" },
@@ -70,10 +70,6 @@ export const homeSeed: HomeContent = {
       guarantees: ["Gratuit et confidentiel", "Plus de 10 ans d'expérience", "Sans jugement"],
     },
     {
-      __component: "home.themes-strip",
-      items: ["Protection", "Mauvais œil", "Sorcellerie", "Djinns amoureux", "Maléfices", "Roqya pour dormir", "Roqya pour la maison", "Roqya pour la subsistance"],
-    },
-    {
       __component: "home.how-it-works",
       eyebrow: "Comment ça marche",
       title: "Un chemin simple,",
@@ -98,16 +94,16 @@ export const homeSeed: HomeContent = {
           number: "03",
           title: "Échangez avec moi",
           text: "Une question, un ressenti à partager ? Je vous réponds avec écoute et bienveillance.",
-          linkLabel: "M'écrire →",
-          url: "/contact",
+          linkLabel: "M'appeler →",
+          url: "#appel",
         },
       ],
     },
     {
       __component: "home.diagnostic-teaser",
       eyebrow: "Diagnostic gratuit",
-      title: "Détectez les blocages",
-      titleAccent: "en 20 minutes",
+      title: "Détectez les blocages en 20 minutes, faite le diagnostic en cliquant sur le button",
+      titleAccent: "",
       lead: "Le diagnostic permet de détecter le nombre de magies actives dans le corps. 20 audios, un pour chaque question. Écoutez, puis répondez « oui » si vous ressentez une réaction, « non » sinon.",
       checks: [
         "Gratuit et confidentiel",
@@ -127,31 +123,6 @@ export const homeSeed: HomeContent = {
       lead: "Des roqyas pour la protection, contre la magie noire, le mauvais œil et les djinns.",
       cta: { label: "Rejoignez notre communauté", url: "https://www.youtube.com/@powerfullrokia", variant: "primary" },
       limit: 4,
-    },
-    {
-      __component: "home.why-us",
-      eyebrow: "Pourquoi nous suivre",
-      title: "Pourquoi suivre",
-      titleAccent: "Powerfull Rokia ?",
-      lead: "Plus de dix années d'expérience au service de votre protection.",
-      cta: { label: "Faire le diagnostic — 20 min", url: "/diagnostic", variant: "primary" },
-      features: [
-        {
-          icon: "shield",
-          title: "Roqya spécialisée",
-          text: "Djinns amoureux, sorts anciens, mauvais esprits : une roqya spécialisée pour chaque situation.",
-        },
-        {
-          icon: "book",
-          title: "Méthodes avancées",
-          text: "Des méthodes avancées, et une mise en garde contre le captage spirituel.",
-        },
-        {
-          icon: "heart",
-          title: "Protection spirituelle",
-          text: "Des du'as et des récitations pour vous protéger au quotidien.",
-        },
-      ],
     },
     {
       __component: "sections.text-highlight",
@@ -192,7 +163,7 @@ export const homeSeed: HomeContent = {
       title: "Vos",
       titleAccent: "questions",
       lead: "Une autre question ? Écrivez-nous, nous vous répondons.",
-      cta: { label: "Voir toute la FAQ", url: "/contact#faq", variant: "outline" },
+      cta: { label: "Voir toute la FAQ", url: "/#faq", variant: "outline" },
       limit: 4,
     },
     {
@@ -259,7 +230,7 @@ export const aboutSeed: AboutContent = {
   ctaTitle: "Prêt à faire le point ?",
   ctaLead: "Le diagnostic audio est gratuit et prend 20 minutes.",
   ctaPrimary: { label: "Faire le diagnostic — 20 min", url: "/diagnostic", variant: "gold" },
-  ctaSecondary: { label: "Nous écrire", url: "/contact", variant: "outline-light" },
+  ctaSecondary: { label: "Lire les témoignages", url: "/temoignages", variant: "outline-light" },
 };
 
 export const diagnosticPageSeed: DiagnosticPageContent = {

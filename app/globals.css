@@ -601,9 +601,13 @@ p { margin: 0; }
 .hp { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; }
 
 .verse { text-align: center; padding: 110px 0 90px; }
+.verse-band { position: relative; overflow: hidden; padding-top: 148px; }
 .verse .ar { font-family: "Amiri", "Noto Naskh Arabic", serif; font-size: 40px; color: var(--em); direction: rtl; }
 .verse blockquote { font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 30px; line-height: 1.4; margin: 20px auto 0; color: var(--ink); max-width: 760px; }
 .verse cite { display: block; font-style: normal; font-size: 14px; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 18px; }
+.verse-band .ar,
+.verse-band blockquote { color: #fff; }
+.verse-band cite { color: var(--gold-light); }
 
 footer { border-top: 1px solid var(--line); padding: 56px 0 40px; }
 .fg { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
@@ -1127,6 +1131,7 @@ button.th { display: block; width: 100%; border: 0; padding: 0; cursor: pointer;
   .fg > div:first-child { grid-column: 1 / -1; }
   .fb { flex-direction: column; gap: 8px; }
   .verse { padding: 72px 0 56px; }
+  .verse-band { padding-top: 150px; }
   .verse .ar { font-size: 28px; }
   .verse blockquote { font-size: 22px; }
   .call { right: 16px; bottom: 16px; }
