@@ -29,52 +29,52 @@ export function ResultScreen({
   reactions: number[];
   videos: Video[];
 }) {
-  if (score >= EXPERTISE_FROM) {
-    const listed = reactions.map((order) => `#${order}`).join(" • ");
-    return (
-      <div className="result expertise">
-        <h3>Votre cas nécessite une expertise sérieuse</h3>
-        <p>
-          Bonjour {name}, votre synthèse fait apparaître {score} réaction(s) sur 20 détections.
-        </p>
-        {paragraphs.slice(0, 2).map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
-        <h4>Les deux difficultés, selon Julien</h4>
+  const expertise = score >= EXPERTISE_FROM;
+  const listed = reactions.map((order) => `#${order}`).join(" • ");
+  return (
+    <div
+      className="rounded-xl border-2 p-6"
+      style={{
+        borderColor: expertise ? "var(--d-destructive)" : "var(--d-success)",
+        background: expertise ? "color-mix(in oklab, var(--d-destructive) 10%, transparent)" : "color-mix(in oklab, var(--d-success) 10%, transparent)",
+      }}
+    >
+      <h2 className="font-serif text-3xl font-semibold">{expertise ? "Votre cas nécessite une expertise sérieuse" : band.title || "Diagnostic terminé"}</h2>
+      <p className="mt-3">
+        Bonjour <strong>{name}</strong>, votre synthèse fait apparaître <strong>{score}</strong> réaction(s) sur 20 détections.
+      </p>
+      {expertise ? (
+        paragraphs.slice(0, 2).map((paragraph) => (
+          <p key={paragraph} className="mt-2 text-[var(--d-muted-fg)]">
+            {paragraph}
+          </p>
+        ))
+      ) : (
+        <p className="mt-3">{band.text}</p>
+      )}
+      <section className="mt-6 space-y-3 border-t border-[var(--d-border)] pt-5">
+        <h3 className="font-serif text-2xl font-semibold">Les deux difficultés, selon Julien</h3>
         {paragraphs.slice(2).map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
-        {listed ? <p className="reactions">Réactions : {listed}</p> : null}
-        <p>Pour tout conseil de déblocage, contacter Julien ici :</p>
-        <button className="exchange" type="button" onClick={openCall}>
-          <ChatIcon />
-          Échanger avec Julien
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="result">
-      <div className="qtop">
-        <span>Votre orientation</span>
-        <span>
-          {score} oui / 20
-        </span>
-      </div>
-      <h3>{band.title}</h3>
-      <p>{band.text}</p>
-      {videos.length > 0 ? (
-        <ul>
+      </section>
+      {videos.length > 0 && !expertise ? (
+        <ul className="mt-4 space-y-2">
           {videos.map((video) => (
             <li key={video.title}>
-              <a href={video.youtubeUrl} target="_blank" rel="noreferrer">
+              <a className="font-semibold text-[var(--d-primary)]" href={video.youtubeUrl} target="_blank" rel="noreferrer">
                 {video.title}
               </a>
             </li>
           ))}
         </ul>
       ) : null}
+      <p className="mt-4 text-sm text-[var(--d-muted-fg)]">Réactions : {listed || "aucune"}</p>
+      <p className="mt-5 text-sm text-[var(--d-muted-fg)]">Pour tout conseil de déblocage, contactez Julien ici :</p>
+      <button className="mt-2 inline-flex h-12 cursor-pointer items-center gap-2 rounded-md bg-[var(--d-primary)] px-5 font-semibold text-[var(--d-primary-fg)] shadow" type="button" onClick={openCall}>
+        <ChatIcon color="currentColor" />
+        Échanger avec Julien
+      </button>
     </div>
   );
 }

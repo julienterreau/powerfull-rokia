@@ -16,10 +16,16 @@ export async function POST(request: Request) {
   }
   const source = body?.source === "podcast" ? "podcast" : "blog";
   const payload = await payloadClient();
-  await payload.create({
-    collection: "newsletter-subscribers",
-    overrideAccess: true,
-    data: { email: parsed.data.email, source },
-  });
+  try {
+    await payload.create({
+      collection: "newsletter-subscribers",
+      overrideAccess: true,
+      data: { email: parsed.data.email, source },
+    });
+  } catch (error) {
+    const detail = `${error instanceof Error ? error.message : ""} ${JSON.stringify(error) ?? ""}`;
+    if (/unique|duplicate/i.test(detail)) return NextResponse.json({ ok: true, already: true });
+    return NextResponse.json({ error: "L'inscription n'a pas abouti." }, { status: 500 });
+  }
   return NextResponse.json({ ok: true });
 }

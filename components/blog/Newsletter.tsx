@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
 
 export function Newsletter({ title, text, placeholder, button }: { title: string; text: string; placeholder: string; button: string }) {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
-  const [message, setMessage] = useState("");
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
@@ -14,15 +14,24 @@ export function Newsletter({ title, text, placeholder, button }: { title: string
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, company, source: "blog" }),
     });
-    setMessage(response.ok ? "Inscription enregistrée." : "L'inscription n'a pas abouti.");
-    if (response.ok) setEmail("");
+    const result = await response.json().catch(() => null);
+    if (response.ok && result?.already) {
+      toast("Cette adresse est déjà enregistrée.");
+      return;
+    }
+    if (response.ok) {
+      setEmail("");
+      toast.success("Votre e-mail a bien été enregistré.");
+      return;
+    }
+    toast.error("L'inscription n'a pas abouti. Réessayez.");
   }
 
   return (
     <form className="nl" onSubmit={onSubmit}>
       <div>
         <h3>{title}</h3>
-        <p>{message || text}</p>
+        <p>{text}</p>
       </div>
       <div className="form">
         <label className="hp">

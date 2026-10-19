@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { Guestbook } from "@/components/guestbook/Guestbook";
+import { PageHero } from "@/components/layout/PageHero";
 import { payloadClient } from "@/lib/cms";
+import { getGlobal } from "@/lib/content";
 import { loadGuestbook } from "@/lib/guestbook";
 
 export const metadata: Metadata = {
@@ -11,22 +13,27 @@ export const metadata: Metadata = {
 
 export default async function TestimonialsPage() {
   const payload = await payloadClient();
-  const { user } = await payload.auth({ headers: await headers() });
-  const visitor = (await cookies()).get("pr-visitor")?.value ?? "";
+  const [{ user }, global, visitor] = await Promise.all([
+    payload.auth({ headers: await headers() }),
+    getGlobal(),
+    cookies().then((jar) => jar.get("pr-visitor")?.value ?? ""),
+  ]);
   const entries = await loadGuestbook(visitor);
 
   return (
-    <main id="contenu" className="px-5 pt-28 pb-20 md:pt-36">
-      <div className="mx-auto max-w-[820px]">
-        <p className="text-center text-xs font-semibold tracking-[0.16em] text-gold uppercase">Livre d&apos;or</p>
-        <h1 className="mt-3 text-center font-serif text-5xl font-medium text-emerald md:text-6xl">Témoignages</h1>
-        <p className="mx-auto mt-4 max-w-xl text-center text-lg leading-relaxed text-text-2">
-          Partagez un ressenti. Les messages sont publics et apparaissent dès leur envoi.
-        </p>
-        <div className="mt-10">
+    <main id="contenu">
+      <PageHero
+        global={global}
+        crumb="Témoignages"
+        eyebrow="Livre d'or"
+        title="Témoignages"
+        lead="Partagez un ressenti. Les messages sont publics et apparaissent dès leur envoi."
+      />
+      <section style={{ padding: "0 0 110px" }}>
+        <div className="mx-auto max-w-[820px] px-5">
           <Guestbook entries={entries} isClient={Boolean(user)} />
         </div>
-      </div>
+      </section>
     </main>
   );
 }

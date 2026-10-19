@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { AboutCta } from "@/components/about/AboutCta";
-import { Stats } from "@/components/about/Stats";
 import { Story } from "@/components/about/Story";
 import { Values } from "@/components/about/Values";
 import { PageHero } from "@/components/layout/PageHero";
@@ -20,7 +19,6 @@ export default async function AboutPage() {
       <PageHero global={global} crumb={page.crumb} eyebrow={page.eyebrow} title={page.title} titleAccent={page.titleAccent} titleAfter={page.titleAfter} lead={page.lead} />
       <Section>
         <Story page={page} />
-        <Stats items={page.stats} />
       </Section>
       <Section className="pt0">
         <SectionHeader eyebrow={page.valuesEyebrow} title={page.valuesTitle} titleAccent={page.valuesAccent} align="center" />

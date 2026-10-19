@@ -164,7 +164,7 @@ export const homeSeed: HomeContent = {
       titleAccent: "questions",
       lead: "Une autre question ? Écrivez-nous, nous vous répondons.",
       cta: { label: "Voir toute la FAQ", url: "/#faq", variant: "outline" },
-      limit: 4,
+      limit: 5,
     },
     {
       __component: "home.podcast",
@@ -211,11 +211,7 @@ export const aboutSeed: AboutContent = {
   photoLabel: "Photo ou illustration de Julien",
   photoUrl: null,
   photoAlt: "Portrait de Julien Terrau",
-  stats: [
-    { value: "10+ ans", label: "d'expérience dans l'accompagnement par la roqya" },
-    { value: "XX", label: "vidéos de roqya publiées sur la chaîne" },
-    { value: "XX k", label: "abonnés dans la communauté YouTube" },
-  ],
+  stats: [],
   valuesEyebrow: "Notre intention",
   valuesTitle: "Ce qui nous",
   valuesAccent: "guide",
@@ -587,8 +583,15 @@ export const faqSeed: FaqItem[] = [
   {
     question: "Puis-je partager mon expérience ?",
     answer: "Oui. Écrivez-nous via le formulaire, ou laissez un commentaire sous une vidéo de la chaîne. Nous lisons les messages avec attention.",
-    order: 5,
+    order: 6,
     showOnHome: false,
+  },
+  {
+    question: "Clause de décharge de responsabilité",
+    answer:
+      "Le site powerfull rokia propose des services et contenus liés à la pratique de la roqia, qui est une démarche spirituelle et non médicale. En aucun cas, les informations, conseils ou prestations proposés sur ce site ne doivent être considérés comme des actes médicaux, infirmiers, paramédicaux ou thérapeutiques.\n\nNous ne pratiquons aucune forme d'acte médical, y compris mais sans s'y limiter, la hijama (cupping therapy) ou toute autre intervention nécessitant une qualification médicale ou paramédicale. De même, nous ne fournissons aucun avis, diagnostic, traitement ou prescription médicale.\n\nL'utilisation des informations et services proposés sur ce site se fait sous la seule responsabilité de l'utilisateur. En cas de problème de santé, il est impératif de consulter un professionnel de santé qualifié.",
+    order: 5,
+    showOnHome: true,
   },
 ];
 

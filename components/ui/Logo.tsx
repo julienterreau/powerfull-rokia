@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { MoonIcon } from "./icons";
 
-export function Logo({ name, light = false }: { name: string; light?: boolean }) {
+export function Logo({ name, light = false, large = false }: { name: string; light?: boolean; large?: boolean }) {
   return (
-    <Link href="/" className="logo" style={{ color: light ? "#fff" : undefined }}>
+    <Link href="/" className={large ? "logo logo-lg" : "logo"} style={{ color: light ? "#fff" : undefined }}>
       <i style={{ background: light ? "rgba(255,255,255,.12)" : undefined }} aria-hidden>
-        <MoonIcon />
+        <MoonIcon size={large ? 18 : 20} />
       </i>
       {name}
     </Link>

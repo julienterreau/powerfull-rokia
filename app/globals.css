@@ -114,7 +114,8 @@ p { margin: 0; }
 .bo { border: 1px solid rgba(29, 42, 38, 0.2); color: var(--ink); background: transparent; }
 .bw { background: #fff; color: var(--em); }
 .bl { border: 1px solid rgba(255, 255, 255, 0.35); color: #fff; background: transparent; }
-.nav-cta { height: 46px; padding: 0 20px; }
+.nav-cta { height: 46px; padding: 0 20px; color: #fff; transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
+.nav-cta:hover { background: #c6a15c; color: #fff; transform: translateY(-2px); box-shadow: 0 14px 28px -16px rgba(15, 61, 51, 0.55); }
 
 .pat {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23B8914A' stroke-opacity='.18' stroke-width='1'%3E%3Cpath d='M40 8l9 23 23 9-23 9-9 23-9-23-23-9 23-9z'/%3E%3Crect x='22' y='22' width='36' height='36' transform='rotate(45 40 40)'/%3E%3C/g%3E%3C/svg%3E");
@@ -142,6 +143,11 @@ p { margin: 0; }
   justify-content: center;
   font-style: normal;
 }
+.logo-lg { font-size: 34px; gap: 14px; }
+.logo-lg i { width: 56px; height: 56px; border-radius: 16px; }
+.fg .logo { display: inline-flex; margin: 0; color: var(--em); font-size: 32px; }
+.fg .logo-lg { gap: 12px; }
+.fg .logo-lg i { width: 36px; height: 36px; border-radius: 12px; }
 
 .nav2 {
   position: fixed;
@@ -237,6 +243,9 @@ p { margin: 0; }
 .hin { position: relative; text-align: center; max-width: none; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
 .hin h1 { font-size: 75px; line-height: 1.08; margin: 26px auto 0; max-width: 1000px; color: #fff; text-wrap: wrap; }
 .hin h1 em { color: var(--gold-light); }
+@media (min-width: 768px) {
+  .hin h1 em { display: block; }
+}
 .hbadge {
   display: inline-flex;
   align-items: center;
@@ -570,7 +579,7 @@ p { margin: 0; }
   padding: 0;
 }
 .qi .mark svg { display: block; }
-.qi .a { font-size: 15px; color: var(--t2); line-height: 1.65; margin-top: 12px; max-width: 600px; }
+.qi .a { font-size: 15px; color: var(--t2); line-height: 1.65; margin-top: 12px; max-width: 720px; white-space: pre-line; }
 
 .cta {
   border-radius: 40px;
@@ -633,7 +642,10 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 40px; }
   font-size: 13px;
   color: var(--t3);
 }
-.fb span { display: flex; gap: 8px; }
+.fb span { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.fb .made { margin: 0; font-size: 13px; color: var(--t3); white-space: nowrap; }
+.fb .made a { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.fb .made a:hover { color: var(--em); }
 
 #wch-launcher,
 #wch-badge,
@@ -1079,6 +1091,10 @@ button.th { display: block; width: 100%; border: 0; padding: 0; cursor: pointer;
   .hx > .c, .sub > .c { padding-top: 86px; }
   .logo { font-size: 19px; }
   .logo i { width: 34px; height: 34px; }
+  .logo-lg { font-size: 28px; }
+  .logo-lg i { width: 48px; height: 48px; }
+  .fg .logo { font-size: 26px; }
+  .fg .logo-lg i { width: 32px; height: 32px; }
   .hin { margin-top: 0; }
   .hin h1 { font-size: 42px; }
   .hin p.l { font-size: 16px; }
@@ -1145,7 +1161,7 @@ button.th { display: block; width: 100%; border: 0; padding: 0; cursor: pointer;
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .strip .c, .call-btn::after { animation: none; }
-  .lift, .bar2 i, .nav2 { transition: none; }
-  .lift:hover { transform: none; }
+  .lift, .bar2 i, .nav2, .nav-cta { transition: none; }
+  .lift:hover, .nav-cta:hover { transform: none; }
   .wv.play i { animation: none; }
 }

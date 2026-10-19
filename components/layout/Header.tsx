@@ -37,7 +37,7 @@ export function Header({ global }: { global: GlobalContent }) {
       <div className={cn("nav-row", !compact && "c")}>
         <Logo name={global.siteName} light={!compact} />
         <NavPill items={compact ? compactMenu : topMenu} />
-        <a className={cn("btn nav-cta", compact ? "bp" : "bw")} href="/diagnostic">
+        <a className="btn nav-cta bg" href="/diagnostic">
           Faire le diagnostic
         </a>
         <MobileMenu items={global.menu} siteName={global.siteName} cta="Faire le diagnostic" />

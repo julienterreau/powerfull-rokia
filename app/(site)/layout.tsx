@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { CallWidget } from "@/components/layout/CallWidget";
 import { getGlobal } from "@/lib/content";
+import { Toaster } from "sonner";
 import { env } from "@/lib/env";
 import "../globals.css";
 
@@ -58,6 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {children}
         <Footer global={global} />
         <CallWidget enabled={global.callWidgetEnabled} />
+        <Toaster position="top-center" richColors offset={96} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>

@@ -8,7 +8,7 @@ export function Footer({ global }: { global: GlobalContent }) {
       <div className="c">
         <div className="fg">
           <div>
-            <Logo name={global.siteName} />
+            <Logo name={global.siteName} large />
             <p>{global.baseline}</p>
           </div>
           <div>
@@ -38,15 +38,19 @@ export function Footer({ global }: { global: GlobalContent }) {
         <div className="fb">
           <span>
             © {year} {global.siteName}
-          </span>
-          <span>
-            {global.legal.map((item, index) => (
+            {global.legal.map((item) => (
               <a key={item.url} href={item.url}>
-                {index > 0 ? " · " : ""}
+                {" · "}
                 {item.label}
               </a>
             ))}
           </span>
+          <p className="made">
+            Made by{" "}
+            <a href="https://brandionary.com" target="_blank" rel="noreferrer">
+              Brandionary
+            </a>
+          </p>
         </div>
       </div>
     </footer>
