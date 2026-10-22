@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { Guestbook } from "@/components/guestbook/Guestbook";
 import { PageHero } from "@/components/layout/PageHero";
-import { payloadClient } from "@/lib/cms";
 import { getGlobal } from "@/lib/content";
 import { loadGuestbook } from "@/lib/guestbook";
 
@@ -12,9 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function TestimonialsPage() {
-  const payload = await payloadClient();
-  const [{ user }, global, visitor] = await Promise.all([
-    payload.auth({ headers: await headers() }),
+  const [global, visitor] = await Promise.all([
     getGlobal(),
     cookies().then((jar) => jar.get("pr-visitor")?.value ?? ""),
   ]);
@@ -31,7 +28,7 @@ export default async function TestimonialsPage() {
       />
       <section style={{ padding: "0 0 110px" }}>
         <div className="mx-auto max-w-[820px] px-5">
-          <Guestbook entries={entries} isClient={Boolean(user)} />
+          <Guestbook entries={entries} isClient={false} />
         </div>
       </section>
     </main>

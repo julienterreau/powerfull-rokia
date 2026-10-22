@@ -1,5 +1,6 @@
-import { payloadClient } from "@/lib/cms";
 import { FAVORITE_EMOJIS, type GuestbookNode } from "@/lib/guestbook-shared";
+import { sanityClient, sanityConfigured } from "@/lib/sanity/client";
+import { guestbookQuery, reactionsQuery } from "@/lib/sanity/queries";
 
 export type { GuestbookNode };
 
@@ -15,11 +16,13 @@ function relationId(value: unknown) {
 }
 
 export async function loadGuestbook(visitorId: string): Promise<GuestbookNode[]> {
-  const payload = await payloadClient();
-  const [entries, reactions] = await Promise.all([
-    payload.find({ collection: "guestbook", limit: 500, pagination: false, depth: 0, sort: "createdAt", overrideAccess: true }),
-    payload.find({ collection: "guestbook-reactions", limit: 2000, pagination: false, depth: 0, overrideAccess: true }),
+  if (!sanityConfigured()) return [];
+  const [entryDocs, reactionDocs] = await Promise.all([
+    sanityClient().fetch<Array<Record<string, unknown>>>(guestbookQuery),
+    sanityClient().fetch<Array<Record<string, unknown>>>(reactionsQuery),
   ]);
+  const entries = { docs: entryDocs };
+  const reactions = { docs: reactionDocs };
 
   const counts = new Map<string, Map<string, { count: number; mine: boolean }>>();
   for (const reaction of reactions.docs) {
@@ -41,10 +44,10 @@ export async function loadGuestbook(visitorId: string): Promise<GuestbookNode[]>
     const byEmoji = counts.get(id);
     nodes.set(id, {
       id,
-      authorName: doc.authorName,
-      message: doc.message,
+      authorName: String(doc.authorName),
+      message: String(doc.message),
       fromClient: Boolean(doc.fromClient),
-      dateLabel: date.format(new Date(doc.createdAt)),
+      dateLabel: date.format(new Date(String(doc.createdAt))),
       parentId: relationId(doc.parent),
       replies: [],
       reactions: [...(byEmoji?.entries() ?? [])]

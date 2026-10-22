@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { diagnosticSchema } from "@/lib/schemas/forms";
 import { bandFor, getResults, getVideos, recommendedVideos } from "@/lib/content";
 import { rateLimit } from "@/lib/rate-limit";
-import { payloadClient } from "@/lib/cms";
+import { sanityClient, sanityConfigured } from "@/lib/sanity/client";
 
 export async function POST(request: Request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || "local";
@@ -19,18 +19,16 @@ export async function POST(request: Request) {
   const band = bandFor(score, bands);
   const recommended = recommendedVideos(score, videos);
   try {
-    const payload = await payloadClient();
-    await payload.create({
-      collection: "diagnostic-submissions",
-      overrideAccess: true,
-      data: {
+    if (sanityConfigured()) {
+      await sanityClient().create({
+        _type: "diagnosticSubmission",
         name: parsed.data.name,
         email: parsed.data.email,
-        answers: parsed.data.answers,
+        answers: JSON.stringify(parsed.data.answers),
         score,
         submittedAt: new Date().toISOString(),
-      },
-    });
+      });
+    }
   } catch (error) {
     console.error(error);
   }

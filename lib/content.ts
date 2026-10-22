@@ -16,9 +16,10 @@ import {
   videosPageSeed,
   videosSeed,
 } from "@/content/seed";
-import type { Article, ContactCard, ContactPageContent, GlobalContent, HomeContent, ResultBand, Video } from "@/content/types";
-import { payloadClient } from "./cms";
+import type { Article, Block, ContactCard, ContactPageContent, GlobalContent, HomeContent, LegalPage, ResultBand, Video } from "@/content/types";
 import { homeSections, labels, link, links, mediaAlt, mediaUrl, toArticle, toVideo } from "./cms-map";
+import { sanityClient, sanityConfigured } from "./sanity/client";
+import { collectionQuery, legalListQuery, legalPageQuery, singletonQuery } from "./sanity/queries";
 import { articleText, readingTime } from "./utils";
 import { fetchYoutubeVideos } from "./youtube";
 
@@ -50,14 +51,15 @@ async function cms<T>(read: () => Promise<T | null>, seed: T): Promise<T> {
 }
 
 async function globalDoc(slug: string) {
-  const payload = await payloadClient();
-  return payload.findGlobal({ slug: slug as never, depth: 2 }) as Promise<Doc>;
+  if (!sanityConfigured()) return {};
+  return ((await sanityClient().fetch(singletonQuery, { id: slug })) || {}) as Doc;
 }
 
 async function docs(collection: string) {
-  const payload = await payloadClient();
-  const result = await payload.find({ collection: collection as never, depth: 2, limit: 100, pagination: false });
-  return result.docs as unknown as Doc[];
+  if (!sanityConfigured()) return [];
+  const query = collectionQuery[collection];
+  if (!query) return [];
+  return (await sanityClient().fetch(query)) as Doc[];
 }
 
 function text(doc: Doc, key: string) {
@@ -92,6 +94,14 @@ export const getGlobal = cache(() =>
       legal: links(doc.legal),
       seo: seo(doc, text(doc, "siteName"), text(doc, "baseline")),
     };
+    if (sanityConfigured()) {
+      const pages = await sanityClient().fetch<Array<{ title?: string; slug?: string }>>(legalListQuery);
+      const listed = pages
+        .filter((page) => page.slug && page.title)
+        .sort((a, b) => legalRank(String(a.slug)) - legalRank(String(b.slug)) || String(a.title).localeCompare(String(b.title), "fr"))
+        .map((page) => ({ label: String(page.title), url: `/${page.slug}` }));
+      if (listed.length > 0) content.legal = listed;
+    }
     return content;
   }, globalSeed),
 );
@@ -348,11 +358,32 @@ export const getArticle = cache(async (slug: string) => {
   return articles.find((article) => article.slug === slug) ?? null;
 });
 
+const publishedEmail = globalSeed.email;
+
+function legalRank(slug: string) {
+  if (slug === "mentions-legales") return 0;
+  if (slug === "confidentialite") return 1;
+  return 2;
+}
+
+function withSiteEmail(page: LegalPage, email: string): LegalPage {
+  const swap = (value: string) => (email && email !== publishedEmail ? value.split(publishedEmail).join(email) : value);
+  const blocks = page.blocks.map((block): Block => {
+    if (block.type === "verse") return { ...block, arabic: swap(block.arabic), translation: swap(block.translation), reference: swap(block.reference) };
+    if (block.type === "youtube") return { ...block, url: swap(block.url), title: swap(block.title) };
+    return { ...block, text: swap(block.text) };
+  });
+  return {
+    ...page,
+    lead: swap(page.lead),
+    blocks,
+    seo: { metaTitle: swap(page.seo.metaTitle), metaDescription: swap(page.seo.metaDescription) },
+  };
+}
+
 export const getLegal = cache(async (slug: string) => {
-  return cms(async () => {
-    const payload = await payloadClient();
-    const result = await payload.find({ collection: "legal-pages" as never, where: { slug: { equals: slug } }, depth: 1, limit: 1 });
-    const doc = result.docs[0] as unknown as Doc | undefined;
+  const page = await cms(async () => {
+    const doc = sanityConfigured() ? ((await sanityClient().fetch(legalPageQuery, { slug })) as Doc | null) : null;
     if (!doc) return null;
     const page = legalSeed.find((item) => item.slug === slug);
     return {
@@ -363,7 +394,9 @@ export const getLegal = cache(async (slug: string) => {
       lead: text(doc, "lead"),
       blocks: toArticle({ ...doc, content: doc.content, title: text(doc, "title"), slug, excerpt: text(doc, "lead") }).blocks,
     };
-  }, legalSeed.find((page) => page.slug === slug) ?? null);
+  }, legalSeed.find((item) => item.slug === slug) ?? null);
+  if (!page) return null;
+  return withSiteEmail(page, (await getGlobal()).email);
 });
 
 export function withReadingTime(article: Article) {

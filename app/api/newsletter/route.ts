@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { newsletterSchema } from "@/lib/schemas/forms";
 import { rateLimit } from "@/lib/rate-limit";
-import { payloadClient } from "@/lib/cms";
+import { sanityClient, sanityConfigured } from "@/lib/sanity/client";
 
 export async function POST(request: Request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || "local";
@@ -15,17 +15,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "E-mail invalide." }, { status: 400 });
   }
   const source = body?.source === "podcast" ? "podcast" : "blog";
-  const payload = await payloadClient();
-  try {
-    await payload.create({
-      collection: "newsletter-subscribers",
-      overrideAccess: true,
-      data: { email: parsed.data.email, source },
-    });
-  } catch (error) {
-    const detail = `${error instanceof Error ? error.message : ""} ${JSON.stringify(error) ?? ""}`;
-    if (/unique|duplicate/i.test(detail)) return NextResponse.json({ ok: true, already: true });
-    return NextResponse.json({ error: "L'inscription n'a pas abouti." }, { status: 500 });
-  }
+  if (!sanityConfigured()) return NextResponse.json({ error: "L'inscription n'a pas abouti." }, { status: 500 });
+  const existing = await sanityClient().fetch<string | null>(`*[_type == "newsletterSubscriber" && email == $email][0]._id`, { email: parsed.data.email });
+  if (existing) return NextResponse.json({ ok: true, already: true });
+  await sanityClient().create({ _type: "newsletterSubscriber", email: parsed.data.email, source });
   return NextResponse.json({ ok: true });
 }

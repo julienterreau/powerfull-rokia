@@ -671,7 +671,7 @@ export const legalSeed: LegalPage[] = [
     title: "Politique de confidentialité",
     lead: "Ce que nous collectons, pourquoi, et comment vous exercer vos droits.",
     blocks: [
-      paragraph("Nous collectons les informations que vous nous envoyez : nom et e-mail du diagnostic, message du formulaire de contact, adresse e-mail de la newsletter."),
+      paragraph("Nous collectons les informations que vous nous envoyez : nom et e-mail du diagnostic, et l'adresse e-mail de la newsletter."),
       { type: "heading", text: "Pourquoi" },
       paragraph("Ces données servent uniquement à vous répondre, à vous envoyer le résultat de votre diagnostic ou, si vous l'avez demandé, un e-mail lors d'un nouvel article ou du podcast."),
       { type: "heading", text: "Durée et droits" },

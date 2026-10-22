@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { contactSchema } from "@/lib/schemas/forms";
 import { rateLimit } from "@/lib/rate-limit";
-import { payloadClient } from "@/lib/cms";
+import { sanityClient, sanityConfigured } from "@/lib/sanity/client";
 
 export async function POST(request: Request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || "local";
@@ -14,17 +14,14 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Message incomplet." }, { status: 400 });
   }
-  const payload = await payloadClient();
-  await payload.create({
-    collection: "contact-messages",
-    overrideAccess: true,
-    data: {
-      name: parsed.data.name,
-      email: parsed.data.email,
-      subject: parsed.data.subject,
-      message: parsed.data.message,
-      consent: true,
-    },
+  if (!sanityConfigured()) return NextResponse.json({ error: "L'envoi a échoué." }, { status: 500 });
+  await sanityClient().create({
+    _type: "contactMessage",
+    name: parsed.data.name,
+    email: parsed.data.email,
+    subject: parsed.data.subject,
+    message: parsed.data.message,
+    consent: true,
   });
   return NextResponse.json({ ok: true });
 }
