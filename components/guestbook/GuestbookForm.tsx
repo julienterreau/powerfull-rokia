@@ -62,6 +62,7 @@ export function GuestbookForm({
           {...form.register("message")}
         />
         {form.formState.errors.message ? <span className="mt-1 block text-sm text-gold">{form.formState.errors.message.message}</span> : null}
+        {form.formState.errors.parentId ? <span className="mt-1 block text-sm text-gold">{form.formState.errors.parentId.message}</span> : null}
       </label>
       <div className="flex flex-wrap items-center gap-3">
         <button

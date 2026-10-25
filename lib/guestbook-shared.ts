@@ -17,7 +17,8 @@ const messageField = z
   .max(2000, "2000 caractères maximum.")
   .refine(noTags, tagsMessage);
 
-const parentField = z.string().trim().regex(/^\d*$/, "Réponse invalide.");
+const documentId = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
+const parentField = z.string().trim().refine((value) => value === "" || documentId.test(value), "Réponse invalide.");
 
 export const guestbookSchema = z.object({
   authorName: z.string().trim().max(80).refine((value) => value === "" || (value.length >= 2 && noTags(value)), "Indiquez votre prénom."),
@@ -31,7 +32,7 @@ export const publicGuestbookSchema = guestbookSchema.extend({
 });
 
 export const reactionSchema = z.object({
-  entryId: z.string().trim().regex(/^\d+$/, "Avis introuvable."),
+  entryId: z.string().trim().regex(documentId, "Avis introuvable."),
   emoji: z.string().trim().min(1).max(32).refine(isSingleEmoji, "Émoji invalide."),
 });
 
